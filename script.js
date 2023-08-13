@@ -9,47 +9,47 @@ let startTime, intervalId, elapsedTime = 0;
 let isRunning = false;
 
 function startTimer() {
-    if (!isRunning) {
-        startTime = Date.now() - elapsedTime;
-        intervalId = setInterval(updateTime, 10);
-        isRunning = true;
-    }
+  if (!isRunning) {
+    startTime = Date.now() - elapsedTime;
+    intervalId = setInterval(updateTime, 10);
+    isRunning = true;
+  }
 }
 
 function updateTime() {
-    const currentTime = Date.now();
-    elapsedTime = currentTime - startTime;
-    display.textContent = formatTime(elapsedTime);
+  const currentTime = Date.now();
+  elapsedTime = currentTime - startTime;
+  display.textContent = formatTime(elapsedTime);
 }
 
 function formatTime(time) {
-    const date = new Date(time);
-    return date.toISOString().substr(11, 8) + '.' + String(time).slice(-3);
+  const date = new Date(time);
+  return date.toISOString().substr(11, 8) + '.' + String(time).slice(-3);
 }
 
 startButton.addEventListener('click', startTimer);
 
 pauseButton.addEventListener('click', () => {
-    clearInterval(intervalId);
-    isRunning = false;
+  clearInterval(intervalId);
+  isRunning = false;
 });
 
 resetButton.addEventListener('click', () => {
-    clearInterval(intervalId);
-    elapsedTime = 0;
-    display.textContent = formatTime(elapsedTime);
-    isRunning = false;
+  clearInterval(intervalId);
+  elapsedTime = 0;
+  display.textContent = formatTime(elapsedTime);
+  isRunning = false;
+  lapsList.innerHTML = ''; // Clear lap times
 });
 
 lapButton.addEventListener('click', () => {
-    if (isRunning) {
-        const lapTime = formatTime(elapsedTime);
-        const lapItem = document.createElement('li');
-        lapItem.textContent = lapTime;
-        lapsList.appendChild(lapItem);
-    }
+  if (isRunning) {
+    const lapTime = formatTime(elapsedTime);
+    const lapItem = document.createElement('li');
+    lapItem.textContent = lapTime;
+    lapsList.appendChild(lapItem);
+  }
 });
 
 // Initialize the display
 display.textContent = formatTime(elapsedTime);
-
